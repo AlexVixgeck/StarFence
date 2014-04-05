@@ -5,12 +5,13 @@ HOST: http://www.starbounders.es
 StarFence es un gestor y una capa de protección y gestión (middleware) de servidores Starbound
 
 # Autenticación
-Obtención de *token* de sesión
 
 ## Autenticación [/auth]
+Obtención de *token* de sesión
+
 ### Autenticación inicial [POST]
 
-###Project Properties
+###Parámetros
 
 - username (obligatorio, string, `Alex Vixgeck`) - Cadena de texto que define el usuario. El valor es un ejemplo de uso.
 - md5Passwd (obligatorio, string, `23108135d4ae76a3d7a3a3c77df6693c`) - Hash MD5 de la contraseña, salteada con una *magic-word* definida en la configuración. El valor es un ejemplo de uso.
@@ -37,7 +38,100 @@ Obtención de *token* de sesión
 + Response 403 (application/json)
 
         [{
-          "ko": "Usuario o contraseña incorrectos"
+          "ko": "Usuario o contraseña incorrectos",
+        }]
+        
+## Información del servidor [/info/server/{token}]
+Información del servidor
+
+### Estadísticas generales [GET]
+Recupera la información general del servidor
+
+###Parámetros
++ Parameters
+
+    + token (required, string, `ab3cd9j4ks73hf7g`) ... Cadena de texto que pertenece al *token* de sesión activo. El valor es un ejemplo de uso.
+
++ Response 200 (application/json)
+
+        [{
+          "ip": "80.58.0.1",
+          "hostname": "starbounders.es",
+          "uptime": "4320005",
+          "uptimepercent": "97.5",
+          "slots": 30,
+          "players": 3,
+          "hardware": {
+              "cpuid": "Intel(R) Core(TM) i7 CPU 920",
+              "cpufreq": "2.67GHz",
+              "cpupercent": 17,
+              "ramtotal": 49514432,
+              "ramused": 3359920,
+              "ramfree": 46154512
+            }
+        }]
+        
++ Response 404 (application/json)
+
+        [{
+          "ko": "No se ha provisto ningún token"
+        }]
+        
++ Response 403 (application/json)
+
+        [{
+          "ko": "Token no existente"
         }]
         
         
+## Información de los jugadores [/info/players/{token}]
+Información de los jugadores
+
+### Estadísticas de juego [GET]
+Recupera la información de los jugadores
+
+###Parámetros
++ Parameters
+
+    + token (required, string, `ab3cd9j4ks73hf7g`) ... Cadena de texto que pertenece al *token* de sesión activo. El valor es un ejemplo de uso.
+
++ Response 200 (application/json)
+
+        [{
+          "activePlayers": 3,
+          "players": {
+            "Alex Vixgeck": {
+              "id": 1,
+              "ipAddress": "80.58.0.15",
+              "rank": "admin",
+              "characterName": "Alex WaveDiver",
+              "race": "Hylotl"
+            },
+            "Hywther Soresk": {
+              "id": 2,
+              "ipAddress": "221.25.66.44",
+              "rank": "admin",
+              "characterName": "Nakay",
+              "race": "Avali"
+            },
+            "ImAPlayer": {
+              "id": 21,
+              "ipAddress": "95.240.115.10",
+              "rank": "player",
+              "characterName": "ImACharacter",
+              "race": "Floran"
+            }
+          }
+        }]
+        
++ Response 404 (application/json)
+
+        [{
+          "ko": "No se ha provisto ningún token"
+        }]
+        
++ Response 403 (application/json)
+
+        [{
+          "ko": "Token no existente"
+        }]
