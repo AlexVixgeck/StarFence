@@ -1,0 +1,43 @@
+FORMAT: 1A
+HOST: http://www.starbounders.es
+
+# StarFence
+StarFence es un gestor y una capa de protección y gestión (middleware) de servidores Starbound
+
+# Autenticación
+Obtención de *token* de sesión
+
+## Autenticación [/auth]
+### Autenticación inicial [POST]
+
+###Project Properties
+
+- username (obligatorio, string, `Alex Vixgeck`) - Cadena de texto que define el usuario. El valor es un ejemplo de uso.
+- md5Passwd (obligatorio, string, `23108135d4ae76a3d7a3a3c77df6693c`) - Hash MD5 de la contraseña, salteada con una *magic-word* definida en la configuración. El valor es un ejemplo de uso.
+    
++ Request (application/json)
+
+        {
+            "username": "Alex Vixgeck",
+            "md5Passwd": "23108135d4ae76a3d7a3a3c77df6693c"
+        }
+   
++ Response 200 (application/json)
+
+        [{
+          "ok": "ab3cd9j4ks73hf7g"
+        }]
+        
++ Response 404 (application/json)
+
+        [{
+          "ko": "Usuario inexistente"
+        }]
+        
++ Response 403 (application/json)
+
+        [{
+          "ko": "Usuario o contraseña incorrectos"
+        }]
+        
+        
